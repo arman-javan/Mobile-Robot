@@ -1,0 +1,44 @@
+﻿<mujoco model="Mobile Robot">
+
+	<asset>
+		<texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+		<material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2"/>
+	</asset>
+	
+	<worldbody>
+		<geom name="ground" type="plane" size="0 0 0.1" material="grid"/>
+		<light directional="false" active="true" pos="0 0 10" dir="0 0 -1"/>
+		
+		<body pos="0 0 0.5">
+			<freejoint/>
+			<geom name="mainBody" type="cylinder" size="1.25 0.25" rgba="0.8 0.8 0.8 1.0"/>
+			<geom type="sphere" size="0.25" pos="0 1 -0.25"/>
+			<geom type="sphere" size="0.25" pos="0 -1 -0.25"/>
+			<geom type="cylinder" size="0.25" fromto="0 1.2 -0.2 0 1.2 0.2" rgba="0.0 0.0 0.0 1.0"/>
+			
+			<body pos="0 0 0">
+				<joint name="rightWheel" type="hinge" pos="0 0 0" axis="-1 0 0"/>
+				<geom type="cylinder" size="0.125" fromto="1 0 0 2 0 0" rgba="0 0 0 1"/>
+				<geom type="cylinder" size="0.5" fromto="1.9 0 0 2.1 0 0" rgba="0.8 0.8 0.8 1.0"/>
+			</body>
+			
+			<body pos="0 0 0">
+				<joint name="leftWheel" type="hinge" pos ="0 0 0" axis="-1 0 0"/>
+				<geom type="cylinder" size="0.125" fromto="-1 0 0 -2 0 0" rgba="0 0 0 1"/>
+				<geom type="cylinder" size="0.5" fromto="-1.9 0 0 -2.1 0 0" rgba="0.8 0.8 0.8 1.0"/>
+			</body>
+		
+		</body>
+	
+	</worldbody>
+
+	<actuator>
+		<motor name="rightMotor" joint="rightWheel" ctrlrange="-5000 +5000"/>
+		<motor name="leftMotor"  joint="leftWheel"  ctrlrange="-5000 +5000"/>
+	</actuator>
+
+	<sensor>
+		<framepos objtype="geom" objname="mainBody" reftype="geom" refname="ground"/>
+	</sensor>
+
+</mujoco>
